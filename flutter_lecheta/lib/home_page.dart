@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_lecheta/pages/hello_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -6,29 +7,65 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Hello Flutter"),
-        centerTitle: true,
       ),
-      body: _body(),
+      body: _body(context),
     );
   }
 
-  _body() {
+  _body(context) {
     return Container(
       color: Colors.amberAccent,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _text(),
-            _pageView(),
-            _buttons(),
-          ],
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          _text(),
+          _pageView(),
+          _buttons(context)
+        ],
       ),
     );
   }
 
-  _button(String text) {
+  _pageView() {
+    return Container(
+      margin: EdgeInsets.only(top: 20, bottom: 20),
+      height: 300,
+      child: PageView(
+        children: <Widget>[
+          _img("assets/images/gato1.jpg"),
+          _img("assets/images/gato2.jpg"),
+          _img("assets/images/gato3.jpg"),
+          _img("assets/images/gato4.jpg"),
+          _img("assets/images/gato5.jpg"),
+        ],
+      ),
+    );
+  }
+
+  _buttons(context) {
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            _button(context,"ListView"),
+            _button(context,"Page 2"),
+            _button(context,"Page "),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            _button(context,"Snack"),
+            _button(context,"Dialog"),
+            _button(context,"Toaste"),
+          ],
+        ),
+      ],
+    );
+  }
+
+  _button(context, text) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         primary: Colors.deepOrangeAccent,
@@ -42,13 +79,15 @@ class HomePage extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        _onClickOk();
+        _onClickOk(context);
       },
     );
   }
 
-  void _onClickOk() {
-    print("Clicou no botão");
+  void _onClickOk(context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return HelloPage1();
+    }));
   }
 
   _img(img) {
@@ -70,42 +109,4 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  _buttons() {
-    return Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            _button("ListView"),
-            _button("Page 2"),
-            _button("Page "),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            _button("Snack"),
-            _button("Dialog"),
-            _button("Toaste"),
-          ],
-        ),
-      ],
-    );
-  }
-
-  _pageView() {
-    return Container(
-      margin: EdgeInsets.only(top: 20, bottom: 20),
-      height: 300,
-      child: PageView(
-        children: <Widget>[
-          _img("assets/images/gato1.jpg"),
-          _img("assets/images/gato2.jpg"),
-          _img("assets/images/gato3.jpg"),
-          _img("assets/images/gato4.jpg"),
-          _img("assets/images/gato5.jpg"),
-        ],
-      ),
-    );
-  }
 }
